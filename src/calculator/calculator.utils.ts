@@ -12,7 +12,7 @@ const evaluateOperations = (a: number, b: number, operator: string) => {
 };
 
 export const isValidCharacters = (expression: string) =>
-  isValidCharactersRegex.test(expression);
+  new RegExp(isValidCharactersRegex).test(expression);
 
 export const isValidParenthesis = (expression: string) => {
   let openedParenthesis = 0;
@@ -31,16 +31,16 @@ export const isValidParenthesisNumber = (expression: string) => {
   return arr.every((e, i) => {
     if (e === '(')
       return (
-        !isValidParenthesisNumberRegex.test(arr[i - 1]) &&
-        (isValidParenthesisNumberRegex.test(arr[i + 1]) ||
+        !new RegExp(isValidParenthesisNumberRegex).test(arr[i - 1]) &&
+        (new RegExp(isValidParenthesisNumberRegex).test(arr[i + 1]) ||
           (arr[i + 1] === '-' &&
-            isValidParenthesisNumberRegex.test(arr[i + 2])))
+            new RegExp(isValidParenthesisNumberRegex).test(arr[i + 2])))
       );
 
     if (e === ')')
       return (
-        isValidParenthesisNumberRegex.test(arr[i - 1]) &&
-        !isValidParenthesisNumberRegex.test(arr[i + 1])
+        new RegExp(isValidParenthesisNumberRegex).test(arr[i - 1]) &&
+        !new RegExp(isValidParenthesisNumberRegex).test(arr[i + 1])
       );
 
     return true;
@@ -85,7 +85,7 @@ export const evaluateString = (
 };
 
 export const evaluate = (expression: string) => {
-  const res = regexParenthesisEvaluate.exec(expression);
+  const res = new RegExp(regexParenthesisEvaluate).exec(expression);
 
   if (!res?.[1]) return evaluateString(expression, true);
 
